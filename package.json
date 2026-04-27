@@ -1,0 +1,51 @@
+{
+  "name": "@verepdev/iyzico-mcp",
+  "version": "0.0.1",
+  "description": "MCP server scaffold for Iyzico (Turkish payment processor) — read-mostly access for Claude / Cursor / cline.",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "src/index.ts",
+  "bin": {
+    "iyzico-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "test": "bun test",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "prepublishOnly": "bun run build"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "license": "MIT",
+  "author": "Göksel Verep <verepdev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/verepdev/iyzico-mcp.git"
+  },
+  "homepage": "https://github.com/verepdev/iyzico-mcp",
+  "bugs": "https://github.com/verepdev/iyzico-mcp/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "iyzipay": "^2.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/bun": "latest",
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "iyzico",
+    "iyzipay",
+    "payments",
+    "turkey",
+    "claude",
+    "cursor"
+  ],
+  "trustedDependencies": ["@biomejs/biome"]
+}
