@@ -41,15 +41,11 @@ export async function listPayments(input: ListPaymentsInput): Promise<IyzicoResp
         if (
           result &&
           typeof result === "object" &&
-          "status" in result &&
-          (result as { status?: string }).status === "failure"
+          "errorCode" in result &&
+          (result as { errorCode?: unknown }).errorCode != null
         ) {
           const r = result as { errorCode?: string; errorMessage?: string };
-          reject(
-            new Error(
-              `Iyzico API error ${r.errorCode ?? "unknown"}: ${r.errorMessage ?? "no message"}`,
-            ),
-          );
+          reject(new Error(`Iyzico API error ${r.errorCode}: ${r.errorMessage ?? "no message"}`));
           return;
         }
         resolve(result);
