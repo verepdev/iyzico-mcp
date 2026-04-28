@@ -2,7 +2,7 @@
 
 > MCP server for Iyzico (Turkish payment processor) — read-mostly access for Claude / Cursor / cline.
 
-**v0.0.1** — first read tool: `get_payment`. Not yet published to npm; install from source.
+**v0.0.1** — read tools: `get_payment`, `list_payments`. Not yet published to npm; install from source.
 
 ## Tools
 
@@ -16,6 +16,18 @@ Retrieve an Iyzico payment by its payment ID and merchant conversation ID. Retur
 |---|---|---|---|
 | `paymentId` | string | yes | Iyzico payment ID returned at payment creation. |
 | `paymentConversationId` | string | yes | Merchant-side conversation ID set at payment creation. |
+| `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
+
+### `list_payments`
+
+List Iyzico payments for a single date. Iyzico's reporting API queries one day at a time and returns paginated results — to scan a range, the client calls this tool once per day.
+
+**Input:**
+
+| field | type | required | notes |
+|---|---|---|---|
+| `transactionDate` | string | yes | YYYY-MM-DD. The single day to query. |
+| `page` | int (≥1) | no | 1-based page number. Iyzico applies its own default if omitted. |
 | `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
 
 ## Setup

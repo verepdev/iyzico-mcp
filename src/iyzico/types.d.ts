@@ -28,8 +28,20 @@ declare module "iyzipay" {
     retrieve(request: PaymentRetrieveRequest, cb: Callback): void;
   }
 
+  export interface ReportingTransactionsRetrieveRequest {
+    locale?: "tr" | "en";
+    conversationId?: string;
+    transactionDate: string;
+    page?: number;
+  }
+
+  export interface ReportingTransactionsResource {
+    retrieve(request: ReportingTransactionsRetrieveRequest, cb: Callback): void;
+  }
+
   export default class Iyzipay {
     constructor(config: IyzipayConfig);
     payment: PaymentResource;
+    reportingTransactions: ReportingTransactionsResource;
   }
 }
