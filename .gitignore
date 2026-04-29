@@ -2,6 +2,9 @@
 CLAUDE.md
 PROJECT.md
 
+# Local dev scripts (sandbox helpers, throwaway)
+scripts/
+
 # Build output
 dist/
 *.tsbuildinfo

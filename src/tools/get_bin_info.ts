@@ -3,29 +3,27 @@ import { z } from "zod";
 import { createClient, getConfig } from "../iyzico/client.js";
 import { mapIyzicoFailure } from "../iyzico/error.js";
 
-export const getPaymentInputShape = {
-  paymentId: z.string().min(1).describe("Iyzico payment ID returned at payment creation."),
-  paymentConversationId: z
+export const getBinInfoInputShape = {
+  binNumber: z
     .string()
-    .min(1)
-    .describe("Merchant-side conversation ID set at payment creation."),
+    .regex(/^\d{6,8}$/, "Expected 6-8 digit BIN")
+    .describe("Bank Identification Number — first 6 to 8 digits of a card number."),
   locale: z.enum(["tr", "en"]).default("en").describe("Response language. Default 'en'."),
 };
 
-export const getPaymentInputSchema = z.object(getPaymentInputShape);
-export type GetPaymentInput = z.infer<typeof getPaymentInputSchema>;
+export const getBinInfoInputSchema = z.object(getBinInfoInputShape);
+export type GetBinInfoInput = z.infer<typeof getBinInfoInputSchema>;
 
-export async function getPayment(input: GetPaymentInput): Promise<IyzicoResponse> {
+export async function getBinInfo(input: GetBinInfoInput): Promise<IyzicoResponse> {
   const config = getConfig();
   const client = createClient(config);
 
   return new Promise<IyzicoResponse>((resolve, reject) => {
-    client.payment.retrieve(
+    client.binNumber.retrieve(
       {
         locale: input.locale,
-        conversationId: input.paymentConversationId,
-        paymentId: input.paymentId,
-        paymentConversationId: input.paymentConversationId,
+        conversationId: `mcp-get-bin-info-${input.binNumber}`,
+        binNumber: input.binNumber,
       },
       (err, result) => {
         if (err) {

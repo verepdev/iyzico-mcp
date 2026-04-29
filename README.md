@@ -2,7 +2,7 @@
 
 > MCP server for Iyzico (Turkish payment processor) — read-mostly access for Claude / Cursor / cline.
 
-**v0.0.1** — read tools: `get_payment`, `list_payments`. Not yet published to npm; install from source.
+**v0.0.2** — 4 read tools: `get_payment`, `list_payments`, `get_bin_info`, `get_installment_info`. Not yet published to npm; install from source.
 
 ## Tools
 
@@ -28,6 +28,29 @@ List Iyzico payments for a single date. Iyzico's reporting API queries one day a
 |---|---|---|---|
 | `transactionDate` | string | yes | YYYY-MM-DD. The single day to query. |
 | `page` | int (≥1) | no | 1-based page number. Iyzico applies its own default if omitted. |
+| `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
+
+### `get_bin_info`
+
+Look up bank/card metadata for the first 6-8 digits of a card number (the BIN). Returns issuer bank, card brand, card type (credit / debit / prepaid), and association.
+
+**Input:**
+
+| field | type | required | notes |
+|---|---|---|---|
+| `binNumber` | string | yes | 6 to 8 leading digits of the card number. |
+| `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
+
+### `get_installment_info`
+
+List installment options Iyzico will allow for a given card BIN at a given price. Returns the installment schedule (1, 2, 3, 6, 9, 12 months) with per-installment pricing.
+
+**Input:**
+
+| field | type | required | notes |
+|---|---|---|---|
+| `binNumber` | string | yes | 6 to 8 leading digits of the card. |
+| `price` | string | yes | Total price as a decimal string (e.g. `"1000"`, `"1000.50"`). |
 | `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
 
 ## Setup
