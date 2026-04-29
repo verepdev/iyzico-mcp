@@ -39,9 +39,32 @@ declare module "iyzipay" {
     retrieve(request: ReportingTransactionsRetrieveRequest, cb: Callback): void;
   }
 
+  export interface BinNumberRetrieveRequest {
+    locale?: "tr" | "en";
+    conversationId?: string;
+    binNumber: string;
+  }
+
+  export interface BinNumberResource {
+    retrieve(request: BinNumberRetrieveRequest, cb: Callback): void;
+  }
+
+  export interface InstallmentInfoRetrieveRequest {
+    locale?: "tr" | "en";
+    conversationId?: string;
+    binNumber: string;
+    price: string;
+  }
+
+  export interface InstallmentInfoResource {
+    retrieve(request: InstallmentInfoRetrieveRequest, cb: Callback): void;
+  }
+
   export default class Iyzipay {
     constructor(config: IyzipayConfig);
     payment: PaymentResource;
     reportingTransactions: ReportingTransactionsResource;
+    binNumber: BinNumberResource;
+    installmentInfo: InstallmentInfoResource;
   }
 }

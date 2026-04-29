@@ -1,6 +1,7 @@
 import type { IyzicoResponse } from "iyzipay";
 import { z } from "zod";
 import { createClient, getConfig } from "../iyzico/client.js";
+import { mapIyzicoFailure } from "../iyzico/error.js";
 
 export const listPaymentsInputShape = {
   transactionDate: z
@@ -38,14 +39,9 @@ export async function listPayments(input: ListPaymentsInput): Promise<IyzicoResp
           reject(err instanceof Error ? err : new Error(String(err)));
           return;
         }
-        if (
-          result &&
-          typeof result === "object" &&
-          "errorCode" in result &&
-          (result as { errorCode?: unknown }).errorCode != null
-        ) {
-          const r = result as { errorCode?: string; errorMessage?: string };
-          reject(new Error(`Iyzico API error ${r.errorCode}: ${r.errorMessage ?? "no message"}`));
+        const failure = mapIyzicoFailure(result);
+        if (failure) {
+          reject(failure);
           return;
         }
         resolve(result);
