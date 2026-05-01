@@ -2,7 +2,7 @@
 
 > MCP server for Iyzico (Turkish payment processor) — read-mostly access for Claude / Cursor / cline.
 
-**v0.0.2** — 4 read tools: `get_payment`, `list_payments`, `get_bin_info`, `get_installment_info`. Not yet published to npm; install from source.
+**v0.0.3** — 5 read tools: `get_payment`, `list_payments`, `get_bin_info`, `get_installment_info`, `get_subscription`. Not yet published to npm; install from source.
 
 ## Tools
 
@@ -51,6 +51,17 @@ List installment options Iyzico will allow for a given card BIN at a given price
 |---|---|---|---|
 | `binNumber` | string | yes | 6 to 8 leading digits of the card. |
 | `price` | string | yes | Total price as a decimal string (e.g. `"1000"`, `"1000.50"`). |
+| `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
+
+### `get_subscription`
+
+Retrieve an Iyzico subscription by its reference code. Returns subscription state (active/canceled/expired), pricing plan, customer reference, and billing schedule.
+
+**Input:**
+
+| field | type | required | notes |
+|---|---|---|---|
+| `subscriptionReferenceCode` | string | yes | Iyzico subscription reference code (returned at subscription creation, permanent ID). |
 | `locale` | `"tr"` \| `"en"` | no | Response language. Default `"en"`. |
 
 ## Setup

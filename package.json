@@ -1,6 +1,6 @@
 {
   "name": "@verepdev/iyzico-mcp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MCP server scaffold for Iyzico (Turkish payment processor) — read-mostly access for Claude / Cursor / cline.",
   "type": "module",
   "main": "dist/index.js",

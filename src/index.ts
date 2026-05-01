@@ -5,11 +5,12 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { getBinInfo, getBinInfoInputShape } from "./tools/get_bin_info.js";
 import { getInstallmentInfo, getInstallmentInfoInputShape } from "./tools/get_installment_info.js";
 import { getPayment, getPaymentInputShape } from "./tools/get_payment.js";
+import { getSubscription, getSubscriptionInputShape } from "./tools/get_subscription.js";
 import { listPayments, listPaymentsInputShape } from "./tools/list_payments.js";
 
 const server = new McpServer({
   name: "iyzico-mcp",
-  version: "0.0.2",
+  version: "0.0.3",
 });
 
 server.tool(
@@ -69,6 +70,23 @@ server.tool(
   getInstallmentInfoInputShape,
   async (input) => {
     const result = await getInstallmentInfo(input);
+    return {
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
+    };
+  },
+);
+
+server.tool(
+  "get_subscription",
+  "Retrieve an Iyzico subscription by its reference code. Returns subscription state (active/canceled/expired), pricing plan, customer reference, and billing schedule.",
+  getSubscriptionInputShape,
+  async (input) => {
+    const result = await getSubscription(input);
     return {
       content: [
         {
