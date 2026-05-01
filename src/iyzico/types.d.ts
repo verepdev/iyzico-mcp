@@ -60,11 +60,22 @@ declare module "iyzipay" {
     retrieve(request: InstallmentInfoRetrieveRequest, cb: Callback): void;
   }
 
+  export interface SubscriptionRetrieveRequest {
+    locale?: "tr" | "en";
+    conversationId?: string;
+    subscriptionReferenceCode: string;
+  }
+
+  export interface SubscriptionResource {
+    retrieve(request: SubscriptionRetrieveRequest, cb: Callback): void;
+  }
+
   export default class Iyzipay {
     constructor(config: IyzipayConfig);
     payment: PaymentResource;
     reportingTransactions: ReportingTransactionsResource;
     binNumber: BinNumberResource;
     installmentInfo: InstallmentInfoResource;
+    subscription: SubscriptionResource;
   }
 }
